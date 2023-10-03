@@ -8,6 +8,7 @@
 import {useEffect, useState} from 'react';
 
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 const windowSizes = {
   desktop: 'desktop',
@@ -45,17 +46,27 @@ const DevSimulateSSR = process.env.NODE_ENV === 'development' && true;
  * In development mode, this hook will still return `"ssr"` for one second, to
  * catch potential layout shifts, similar to strict mode calling effects twice.
  */
-export function useWindowSize(desktopThresholdWidth = 996): WindowSize {
+export function useWindowSize(desktopThresholdWidth?: number): WindowSize {
+  const {siteConfig} = useDocusaurusContext();
+  // @ts-expect-error the values in customFields can be anything, so let's ignore this TS error
+  const siteConfigDesktopThresholdWidth =
+    siteConfig?.themeConfig?.customFields?.breakpoints?.desktop;
+  const customDesktopThresholdWidth =
+    desktopThresholdWidth ?? siteConfigDesktopThresholdWidth;
+  const finalDesktopThresholdWidth = customDesktopThresholdWidth ?? 996;
+
   const [windowSize, setWindowSize] = useState<WindowSize>(() => {
     if (DevSimulateSSR) {
       return 'ssr';
     }
-    return getWindowSize({desktopThresholdWidth});
+    return getWindowSize({desktopThresholdWidth: finalDesktopThresholdWidth});
   });
 
   useEffect(() => {
     function updateWindowSize() {
-      setWindowSize(getWindowSize({desktopThresholdWidth}));
+      setWindowSize(
+        getWindowSize({desktopThresholdWidth: finalDesktopThresholdWidth}),
+      );
     }
 
     const timeout = DevSimulateSSR
@@ -68,7 +79,7 @@ export function useWindowSize(desktopThresholdWidth = 996): WindowSize {
       window.removeEventListener('resize', updateWindowSize);
       clearTimeout(timeout);
     };
-  }, [desktopThresholdWidth]);
+  }, [finalDesktopThresholdWidth]);
 
   return windowSize;
 }
