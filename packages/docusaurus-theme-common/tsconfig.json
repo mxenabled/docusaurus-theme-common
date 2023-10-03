@@ -4,7 +4,7 @@
     "noEmit": false,
     "incremental": true,
     "tsBuildInfoFile": "./lib/.tsbuildinfo",
-    "module": "esnext",
+    "module": "NodeNext",
     "target": "esnext",
     "sourceMap": true,
     "declarationMap": true,
