@@ -49,8 +49,7 @@ const DevSimulateSSR = process.env.NODE_ENV === 'development' && true;
 export function useWindowSize(desktopThresholdWidth?: number): WindowSize {
   const {siteConfig} = useDocusaurusContext();
   const siteConfigDesktopThresholdWidth =
-    // @ts-expect-error the values in customFields can be anything, so let's ignore this TS error
-    siteConfig?.themeConfig?.customFields?.breakpoints?.desktop;
+    siteConfig?.customFields?.breakpoints?.desktop;
   const customDesktopThresholdWidth =
     desktopThresholdWidth ?? siteConfigDesktopThresholdWidth;
   const finalDesktopThresholdWidth = customDesktopThresholdWidth ?? 996;
