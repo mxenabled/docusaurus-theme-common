@@ -48,8 +48,9 @@ const DevSimulateSSR = process.env.NODE_ENV === 'development' && true;
  */
 export function useWindowSize(desktopThresholdWidth?: number): WindowSize {
   const {siteConfig} = useDocusaurusContext();
-  const siteConfigDesktopThresholdWidth =
-    siteConfig?.customFields?.breakpoints?.desktop;
+  const siteConfigDesktopThresholdWidth: number | undefined = (
+    siteConfig?.customFields?.breakpoints as any
+  )?.desktop;
   const customDesktopThresholdWidth =
     desktopThresholdWidth ?? siteConfigDesktopThresholdWidth;
   const finalDesktopThresholdWidth = customDesktopThresholdWidth ?? 996;
