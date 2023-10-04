@@ -366,5 +366,6 @@ xsoar
 yacop
 yangshun
 yangshunz
+yarnrc
 zhou
 zoomable
