@@ -1,6 +1,6 @@
 {
   "name": "@mxenabled/docusaurus-theme-common",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "Common code for Docusaurus themes.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
