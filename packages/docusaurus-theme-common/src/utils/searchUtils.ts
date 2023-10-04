@@ -8,7 +8,8 @@
 import {
   useAllDocsData,
   useActivePluginAndVersion,
-} from '@docusaurus/plugin-content-docs/client';
+  type GlobalVersion,
+} from '@docusaurus/plugin-content-docs/lib/client';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {useDocsPreferredVersionByPluginId} from '../contexts/docsPreferredVersion';
 
@@ -46,7 +47,7 @@ export function useContextualSearchFilters(): {locale: string; tags: string[]} {
     const preferredVersion = docsPreferredVersionByPluginId[pluginId];
 
     const latestVersion = allDocsData[pluginId]!.versions.find(
-      (v) => v.isLast,
+      (v: GlobalVersion) => v.isLast,
     )!;
 
     const version = activeVersion ?? preferredVersion ?? latestVersion;

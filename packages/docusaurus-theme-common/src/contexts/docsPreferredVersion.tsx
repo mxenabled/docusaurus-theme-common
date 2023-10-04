@@ -18,7 +18,7 @@ import {
   useDocsData,
   type GlobalPluginData,
   type GlobalVersion,
-} from '@docusaurus/plugin-content-docs/client';
+} from '@docusaurus/plugin-content-docs/lib/client';
 import {DEFAULT_PLUGIN_ID} from '@docusaurus/constants';
 import {
   useThemeConfig,
@@ -98,7 +98,7 @@ function readStorageState({
     );
     const pluginData = allDocsData[pluginId]!;
     const versionExists = pluginData.versions.some(
-      (version) => version.name === preferredVersionNameUnsafe,
+      (version: GlobalVersion) => version.name === preferredVersionNameUnsafe,
     );
     if (versionExists) {
       return {preferredVersionName: preferredVersionNameUnsafe};
@@ -215,7 +215,7 @@ export function useDocsPreferredVersion(
 
   const preferredVersion =
     docsData.versions.find(
-      (version) => version.name === preferredVersionName,
+      (version: GlobalVersion) => version.name === preferredVersionName,
     ) ?? null;
 
   const savePreferredVersionName = useCallback(
@@ -240,7 +240,7 @@ export function useDocsPreferredVersionByPluginId(): {
 
     return (
       docsData.versions.find(
-        (version) => version.name === preferredVersionName,
+        (version: GlobalVersion) => version.name === preferredVersionName,
       ) ?? null
     );
   }

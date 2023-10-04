@@ -16,7 +16,7 @@ import {
   type GlobalVersion,
   type GlobalSidebar,
   type GlobalDoc,
-} from '@docusaurus/plugin-content-docs/client';
+} from '@docusaurus/plugin-content-docs/lib/client';
 import type {Props as DocPageProps} from '@theme/DocPage';
 import {useDocsPreferredVersion} from '../contexts/docsPreferredVersion';
 import {useDocsVersion} from '../contexts/docsVersion';
