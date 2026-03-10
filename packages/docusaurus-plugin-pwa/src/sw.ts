@@ -105,13 +105,22 @@ function getPossibleURLs(url: string) {
       for (const possibleURL of possibleURLs) {
         const cacheKey = controller.getCacheKeyForURL(possibleURL);
         if (cacheKey) {
-          const cachedResponse = caches.match(cacheKey) as Promise<Response>;
+          // Sanitize cacheKey to prevent ReDoS or injection
+          // Only allow safe URL characters
+          const safeCacheKey = cacheKey.replace(
+            /[^\w.\-~:/?#[\]@!$&'()*+,;=%]/g,
+            '',
+          );
+          const cachedResponse = caches.match(
+            safeCacheKey,
+          ) as Promise<Response>;
           if (params.debug) {
             console.log('[Docusaurus-PWA][SW]: serving cached asset', {
               requestURL,
               possibleURL,
               possibleURLs,
               cacheKey,
+              safeCacheKey,
               cachedResponse,
             });
           }
